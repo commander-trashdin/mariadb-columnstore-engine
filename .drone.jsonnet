@@ -19,6 +19,7 @@ local platforms_mtr = ['centos:7', 'centos:8', 'ubuntu:20.04'];
 local server_ref_map = {
   develop: '10.6',
   'develop-5': '10.5',
+  'develop-6': '10.5',
   'columstore-5.6.2-1-test': 'enterprise-10.5',
   '**': '10.6',
 };
