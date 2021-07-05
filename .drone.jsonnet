@@ -20,7 +20,7 @@ local server_ref_map = {
   develop: '10.6',
   'develop-5': '10.5',
   'develop-6': '10.5',
-  'columnstore-5.6.2-1-test': 'enterprise-10.5',
+  'columnstore-5.6.2-1-test': '10.5.10.7',
   '**': '10.6',
 };
 
@@ -301,7 +301,7 @@ local Pipeline(branch, platform, event, arch='amd64') = {
              volumes: [pipeline._volumes.mdb],
              environment: {
                SERVER_REF: '${SERVER_REF:-' + server_ref_map[branch] + '}',
-               SERVER_REMOTE: '${SERVER_REMOTE:-https://github.com/MariaDB/server}',
+               SERVER_REMOTE: '${SERVER_REMOTE:-https://github.com/mariadb-corporation/MariaDBEnterprise}',
                SERVER_SHA: '${SERVER_SHA:-' + server_ref_map[branch] + '}',
              },
              commands: [
