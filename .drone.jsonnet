@@ -1,16 +1,9 @@
-local events = ['pull_request', 'cron'];
-
-// release pipeline settings
-local events_release = ['push'];
-local platforms_release = {
-  'columstore-5.6.2-1-test': ['opensuse/leap:15', 'centos:7', 'centos:8', 'debian:9', 'debian:10', 'ubuntu:18.04', 'ubuntu:20.04'],
-};
-// release pipeline settings
+local events = ['push'];
 
 local platforms = {
   develop: ['opensuse/leap:15', 'centos:7', 'centos:8', 'debian:9', 'debian:10', 'ubuntu:18.04', 'ubuntu:20.04'],
   'develop-5': ['opensuse/leap:15', 'centos:7', 'centos:8', 'debian:9', 'debian:10', 'ubuntu:18.04', 'ubuntu:20.04'],
-  'columstore-5.6.2-1-test': ['opensuse/leap:15', 'centos:7', 'centos:8', 'debian:9', 'debian:10', 'ubuntu:18.04', 'ubuntu:20.04'],
+  'columstore-5.6.2-1': ['opensuse/leap:15', 'centos:7', 'centos:8', 'debian:9', 'debian:10', 'ubuntu:18.04', 'ubuntu:20.04'],
 };
 
 local platforms_arm = {
@@ -26,7 +19,7 @@ local platforms_mtr = ['centos:7', 'centos:8', 'ubuntu:20.04'];
 local server_ref_map = {
   develop: '10.6',
   'develop-5': '10.5',
-  'columstore-5.6.2-1-test': 'enterprise-10.5',
+  'columstore-5.6.2-1': 'enterprise-10.5',
   '**': '10.6',
 };
 
@@ -447,21 +440,7 @@ local FinalPipeline(branch, event, arch='amd64') = {
   FinalPipeline(b, e)
   for b in std.objectFields(platforms)
   for e in events
-] +
-
-// release pipelines
-[
-  Pipeline(b, p, e)
-  for b in std.objectFields(platforms_release)
-  for p in platforms_release[b]
-  for e in events_release
-] +
-[
-  FinalPipeline(b, e)
-  for b in std.objectFields(platforms_release)
-  for e in events_release
 ]
-// release pipelines
 
 +
 
