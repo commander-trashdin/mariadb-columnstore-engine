@@ -20,7 +20,7 @@ local server_ref_map = {
   develop: '10.6',
   'develop-5': '10.5',
   'develop-6': '10.5',
-  'columnstore-5.6.2-1-test': '10.5.10.7',
+  'columnstore-5.6.2-1-test': '10.5.10-7',
   '**': '10.6',
 };
 
