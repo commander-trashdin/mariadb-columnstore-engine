@@ -3,7 +3,7 @@ local events = ['push'];
 local platforms = {
   develop: ['opensuse/leap:15', 'centos:7', 'centos:8', 'debian:9', 'debian:10', 'ubuntu:18.04', 'ubuntu:20.04'],
   'develop-5': ['opensuse/leap:15', 'centos:7', 'centos:8', 'debian:9', 'debian:10', 'ubuntu:18.04', 'ubuntu:20.04'],
-  'columstore-5.6.2-1': ['opensuse/leap:15', 'centos:7', 'centos:8', 'debian:9', 'debian:10', 'ubuntu:18.04', 'ubuntu:20.04'],
+  'columstore-5.6.2-1-test': ['opensuse/leap:15', 'centos:7', 'centos:8', 'debian:9', 'debian:10', 'ubuntu:18.04', 'ubuntu:20.04'],
 };
 
 local platforms_arm = {
@@ -19,7 +19,7 @@ local platforms_mtr = ['centos:7', 'centos:8', 'ubuntu:20.04'];
 local server_ref_map = {
   develop: '10.6',
   'develop-5': '10.5',
-  'columstore-5.6.2-1': 'enterprise-10.5',
+  'columstore-5.6.2-1-test': 'enterprise-10.5',
   '**': '10.6',
 };
 
