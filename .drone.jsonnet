@@ -229,16 +229,16 @@ local Pipeline(branch, platform, event, arch='amd64') = {
       // copy test data for regression test suite
       'docker exec -t regression$${DRONE_BUILD_NUMBER} bash -c "wget -qO- https://cspkg.s3.amazonaws.com/testData.tar.lz4 | lz4 -dc - | tar xf - -C mariadb-columnstore-regression-test/"',
       // drop charset and collation server settings
-      'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^character-set-server/d;/^collation-server/d" ' + config_path_prefix + 'server.cnf',
+      // 'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^character-set-server/d;/^collation-server/d" ' + config_path_prefix + 'server.cnf',
       // set mariadb lower_case_table_names=1 config option
       'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^.mariadb.$/a lower_case_table_names=1" ' + config_path_prefix + 'server.cnf',
       // set default client character set to utf-8
-      'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^.client.$/a default-character-set=utf8" ' + config_path_prefix + 'client.cnf',
+      // 'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^.client.$/a default-character-set=utf8" ' + config_path_prefix + 'client.cnf',
       // start mariadb and mariadb-columnstore services
       'docker exec -t regression$${DRONE_BUILD_NUMBER} systemctl start mariadb',
       'docker exec -t regression$${DRONE_BUILD_NUMBER} systemctl start mariadb-columnstore',
       // delay regression for manual debugging on live instance
-      'sleep $${REGRESSION_DELAY_SECONDS:-99999s}',
+      'sleep $${REGRESSION_DELAY_SECONDS:-1s}',
       'docker exec -t regression$${DRONE_BUILD_NUMBER} mariadb -e "create database if not exists test;"',
       'docker exec -t --workdir /mariadb-columnstore-regression-test/mysql/queries/nightly/alltest regression$${DRONE_BUILD_NUMBER} timeout -k 1m -s SIGKILL --preserve-status $${REGRESSION_TIMEOUT:-4h} ./go.sh --sm_unit_test_dir=/storage-manager --tests=$${REGRESSION_TESTS}',
     ],
@@ -510,12 +510,12 @@ local FinalPipeline(branch, event, arch='amd64') = {
   for p in platforms[b]
   for e in events
 ] +
-[
-  Pipeline(b, p, e, 'arm64')
-  for b in std.objectFields(platforms_arm)
-  for p in platforms_arm[b]
-  for e in events
-] +
+//[
+//  Pipeline(b, p, e, 'arm64')
+//  for b in std.objectFields(platforms_arm)
+//  for p in platforms_arm[b]
+//  for e in events
+//] +
 [
   FinalPipeline(b, e)
   for b in std.objectFields(platforms)
