@@ -510,12 +510,12 @@ local FinalPipeline(branch, event, arch='amd64') = {
   for p in platforms[b]
   for e in events
 ] +
-//[
-//  Pipeline(b, p, e, 'arm64')
-//  for b in std.objectFields(platforms_arm)
-//  for p in platforms_arm[b]
-//  for e in events
-//] +
+[
+  Pipeline(b, p, e, 'arm64')
+  for b in std.objectFields(platforms_arm)
+  for p in platforms_arm[b]
+  for e in events
+] +
 [
   FinalPipeline(b, e)
   for b in std.objectFields(platforms)
