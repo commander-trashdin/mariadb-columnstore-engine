@@ -73,7 +73,7 @@ local testPreparation(platform) =
     'centos:7': 'yum -y install epel-release && yum install -y gtest-devel cppunit-devel cmake3 boost-devel snappy-devel',
     'centos:8': 'yum install -y dnf-plugins-core libarchive && yum config-manager --set-enabled powertools && yum install -y lz4 gtest-devel cppunit-devel cmake3 boost-devel snappy-devel',
     'debian:10': 'apt update && apt install --yes libboost-all-dev libgtest-dev libcppunit-dev libsnappy-dev googletest cmake',
-    'ubuntu:18.04': 'apt update && apt install --yes libboost-all-dev libgtest-dev libcppunit-dev googletest libsnappy-dev cmake g++ && cd /usr/src/googletest; cmake -D TEST_DISCOVERY_TIMEOUT=15 . && cmake --build . --target install; cd -',
+    'ubuntu:18.04': 'apt update && apt install --yes libboost-all-dev libgtest-dev libcppunit-dev googletest libsnappy-dev cmake g++ && cd /usr/src/googletest; cmake . && cmake --build . --target install; cd -',
     'ubuntu:20.04': 'apt update && apt install --yes libboost-all-dev libgtest-dev libcppunit-dev googletest libsnappy-dev cmake',
   };
   platform_map[platform];
