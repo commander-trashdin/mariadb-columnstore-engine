@@ -220,7 +220,7 @@ local Pipeline(branch, platform, event, arch='amd64') = {
       'docker cp ' + result + ' regression$${DRONE_BUILD_NUMBER}:/',
       'docker cp mariadb-columnstore-regression-test regression$${DRONE_BUILD_NUMBER}:/',
       'docker cp /mdb/' + builddir + '/storage/columnstore/columnstore/storage-manager regression$${DRONE_BUILD_NUMBER}:/',
-      // check storage-manager unit test binary file
+      // list storage-manager dir
       'docker exec -t regression$${DRONE_BUILD_NUMBER} ls -l /storage-manager',
       if (std.split(platform, ':')[0] == 'centos') then 'docker exec -t regression$${DRONE_BUILD_NUMBER} bash -c "yum install -y epel-release diffutils tar lz4 wget which rsyslog hostname && yum install -y /' + result + '/*.' + pkg_format + '"' else '',
       if (pkg_format == 'deb') then 'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d',
@@ -229,11 +229,11 @@ local Pipeline(branch, platform, event, arch='amd64') = {
       // copy test data for regression test suite
       'docker exec -t regression$${DRONE_BUILD_NUMBER} bash -c "wget -qO- https://cspkg.s3.amazonaws.com/testData.tar.lz4 | lz4 -dc - | tar xf - -C mariadb-columnstore-regression-test/"',
       // drop charset and collation server settings
-      // 'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^character-set-server/d;/^collation-server/d" ' + config_path_prefix + 'server.cnf',
-      // set mariadb lower_case_table_names=1 config option
+      'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^character-set-server/d;/^collation-server/d" ' + config_path_prefix + 'server.cnf',
+      set mariadb lower_case_table_names=1 config option
       'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^.mariadb.$/a lower_case_table_names=1" ' + config_path_prefix + 'server.cnf',
       // set default client character set to utf-8
-      // 'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^.client.$/a default-character-set=utf8" ' + config_path_prefix + 'client.cnf',
+      'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^.client.$/a default-character-set=utf8" ' + config_path_prefix + 'client.cnf',
       // start mariadb and mariadb-columnstore services
       'docker exec -t regression$${DRONE_BUILD_NUMBER} systemctl start mariadb',
       'docker exec -t regression$${DRONE_BUILD_NUMBER} systemctl start mariadb-columnstore',
