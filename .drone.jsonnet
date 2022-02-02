@@ -232,7 +232,7 @@ local Pipeline(branch, platform, event, arch='amd64') = {
       'docker exec -t regression$${DRONE_BUILD_NUMBER} bash -c "wget -qO- https://cspkg.s3.amazonaws.com/testData.tar.lz4 | lz4 -dc - | tar xf - -C mariadb-columnstore-regression-test/"',
       // drop charset and collation server settings
       'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^character-set-server/d;/^collation-server/d" ' + config_path_prefix + 'server.cnf',
-      set mariadb lower_case_table_names=1 config option
+      // set mariadb lower_case_table_names=1 config option
       'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^.mariadb.$/a lower_case_table_names=1" ' + config_path_prefix + 'server.cnf',
       // set default client character set to utf-8
       'docker exec -t regression$${DRONE_BUILD_NUMBER} sed -i "/^.client.$/a default-character-set=utf8" ' + config_path_prefix + 'client.cnf',
